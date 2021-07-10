@@ -8,7 +8,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( -1 );
 }
 
-require_once 'highlight/Highlighter.php';
+require_once 'MultiCodeBlockBuilder.php';
 
 /**
  * The main class for the MultiCodeBlock MediaWiki-Extension.

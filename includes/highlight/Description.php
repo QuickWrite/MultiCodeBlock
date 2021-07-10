@@ -4,6 +4,16 @@ require_once 'CustomOptions.php';
 
 use PHPHtmlParser\Dom;
 
+/**
+ * Stores the description of the code.
+ * 
+ * @author QuickWrite
+ * 
+ * @global array $texts An array of all the different descriptions.
+ * @global array $keys The lines where the descriptions should start.
+ * 
+ * @param string $dom A string that has the content of the <desc>-element.
+ */
 class Description {
     public $texts = array();
     public $keys = array();
@@ -19,6 +29,13 @@ class Description {
         $this->setTexts($dom);
     }
 
+    /**
+     * Returns the last line the current description.
+     * 
+     * @param int $index The index of the textblock.
+     * 
+     * @return int The last line of the textblock (based on $index).
+     */
     public function getNext($index) {
         if($index + 1 > sizeof($this->keys))
             return null;
@@ -26,6 +43,11 @@ class Description {
         return $this->keys[$index] - 1;
     }
 
+    /**
+     * Inserts the description into the attrributes.
+     * 
+     * @param string $dom A string that has the content of the <desc>-element.
+     */
     public function setTexts(&$dom) {
 
         $content = new Dom();

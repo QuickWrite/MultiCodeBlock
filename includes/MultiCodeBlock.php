@@ -10,6 +10,11 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 require_once 'highlight/Highlighter.php';
 
+/**
+ * The main class for the MultiCodeBlock MediaWiki-Extension.
+ * 
+ * @author QuickWrite
+ */
 class MultiCodeBlock {
 	public static function onParserFirstCallInit( Parser &$parser ) {
 		$parser->setHook( 'multicodeblock', [ self::class, 'renderMultiCodeBlock' ] );
@@ -20,6 +25,14 @@ class MultiCodeBlock {
 		$out->addModules( [ 'ext.multicodeblock.js' ] );
 	}
 
+	/**
+	 * Returns a string based on the MultiCodeBlock HTML-Element
+	 * 
+	 * @param string $input The content of the MultiCodeBlock HTML-Element
+	 * @param array $args The arguments of the MultiCodeBlock HTML-Element
+	 * @param Parser $parser The MediaWiki syntax parser
+	 * @param PPFrame $frame MediaWiki frame
+	 */
 	public static function renderMultiCodeBlock( $input, array $args, Parser $parser, PPFrame $frame ) {
 		$code = findCodeBlocks($input);
     

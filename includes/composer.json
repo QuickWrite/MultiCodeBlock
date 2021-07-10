@@ -1,0 +1,6 @@
+{
+    "require": {
+        "scrivo/highlight.php": "v9.18.1.6",
+        "paquettg/php-html-parser": "^3.1"
+    }
+}

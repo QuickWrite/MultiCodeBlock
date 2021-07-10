@@ -1,0 +1,177 @@
+.code-table tbody tr pre {
+    text-align: left;
+}
+
+.tabs {
+    border: 1px solid #ccc;
+    display: flex;
+}
+
+.tab-sidebar {
+    width: 125px;
+    flex-shrink: 0;
+    background-color: #fff;
+    border-right: #a3a3a3 1px solid;
+}
+
+.tab-button {
+    font-weight: bold;
+    display: block;
+    padding: 18px;
+    background-color: #eee;
+    border: none;
+    width: 100%;
+    outline: none;
+    cursor: pointer;
+}
+
+.tab-button:active {
+    background-color: #ddd;
+}
+
+.tab-button:not(:last-of-type) {
+    border-bottom: 1px solid #ccc;
+}
+
+.tab-button.tb-active {
+    border-right: 5px solid #b6c0da;
+    background-color: #9c9ea1;
+    color: #fff;
+}
+
+.tab-content {
+    padding: 15px;
+    display: none;
+    width: 100%;
+}
+
+.tab-content.tc-active {
+    display: block;
+}
+
+.code-table {
+    width: 100%;
+    margin-bottom: 5px;
+    font-size: 15.2px;
+}
+
+.code-table > * {
+    margin: 0;
+    padding: 0;
+}
+
+.code-table p {
+    margin: 0 !important;
+}
+
+.code-table li {
+    padding-bottom: 0.1em !important;
+}
+
+.code-table pre {
+    border: none;
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 30px;
+    margin-bottom: -4px;
+    background-color: none !important;
+    overflow: initial;
+}
+
+.code-table th.first pre li span.line {
+    padding: 0 0 0 10px;
+}
+
+.code-table ol {
+    margin-top: 0px !important;
+    margin-left: 1.25rem !important;
+    border-left: 1px gray solid;
+    padding-bottom: 2px !important;
+}
+
+.code-table th {
+    padding: 0;
+    width: 50%;
+}
+
+.code-table th.second {
+    padding-left: 10px;
+    text-align: left;
+    font-weight: normal;
+    font-size: 15.2px;
+}
+
+.copy {
+    position: absolute;
+    right: 0;
+    padding: .7em;
+    display: unset;
+    cursor: pointer;
+    z-index: 99;
+}
+
+.copy.anim {
+    animation-duration: calc(1s * 0.75);
+    animation-name: bounceIn;
+}
+
+.copy .tooltip {
+    visibility: hidden;
+    position: absolute;
+    user-select: none;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    z-index: 1;
+    transition: opacity .6s;
+    top: 100%;
+    left: -10%;
+    margin-left: -60px;
+}
+
+.copy svg {
+    width: 100%;
+    height: 100%;
+}
+
+.copy .tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 72%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #555 transparent;
+}
+
+@keyframes bounceIn {
+    from, 20%, 40%, 60%, 80%, to {
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    20% {
+        transform: scale(1.1);
+    }
+    40% {
+        transform: scale(0.9);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.03);
+    }
+    80% {
+        transform: scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

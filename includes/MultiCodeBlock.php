@@ -1,0 +1,46 @@
+<?php
+/**
+ * Protect against register_globals vulnerabilities.
+ * This line must be present before any global variable is referenced.
+ */
+if( !defined( 'MEDIAWIKI' ) ) {
+	echo( "This is an extension to the MediaWiki package and cannot be run standalone.\n" );
+	die( -1 );
+}
+
+require_once 'highlight/Highlighter.php';
+
+class MultiCodeBlock {
+	public static function onParserFirstCallInit( Parser &$parser ) {
+		$parser->setHook( 'multicodeblock', [ self::class, 'renderMultiCodeBlock' ] );
+	}
+
+	public static function onBeforePageDisplay( OutputPage &$out ) {
+		$out->addModuleStyles( [ 'ext.multicodeblock.styles' ] );
+		$out->addModules( [ 'ext.multicodeblock.js' ] );
+	}
+
+	public static function renderMultiCodeBlock( $input, array $args, Parser $parser, PPFrame $frame ) {
+		$code = findCodeBlocks($input);
+    
+		$replaced = str_replace($code, '', $input);
+		$dom = getDOM($replaced);
+	
+		$codevariants = $dom->getElementsbyTag('codeblock')->toArray();
+		$descriptions = $dom->getElementsbyTag('desc')->toArray();
+	
+		$size = sizeof($codevariants);
+		$return = "";
+		$languages = array();
+
+		$h1 = new \Highlight\Highlighter();
+	
+		for($i = 0; $i < $size; ++$i) {
+			$codeblock = createCodeBlock($codevariants[$i], $code[$i], $descriptions[$i], $parser, $h1);
+			$return .= '<div class="tab-content '.($i == 0 ? 'tc-active' : '').'" data-tab="'.$i.'">'.$codeblock[0].'</div>';
+			array_push($languages, $codeblock[1]);
+		}
+	
+		return createFrame($languages, $return);
+	}
+}

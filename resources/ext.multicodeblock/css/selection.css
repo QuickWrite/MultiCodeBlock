@@ -1,0 +1,7 @@
+.second, .locked {
+    user-select: none;
+}
+
+.onHover {
+    user-select: auto;
+}

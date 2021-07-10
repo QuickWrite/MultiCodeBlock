@@ -1,0 +1,43 @@
+{
+	"name": "MultiCodeBlock",
+	"author": "QuickWrite",
+	"url": "",
+	"description": "Creates a codeblock consisting of multiple languages and a special way of commenting the code.",
+	"version": "1.0",
+	"license-name": "Apache-2.0",
+	"type": "validextensionclass",
+	"manifest_version": 1,
+    "AutoloadClasses": {
+		"MultiCodeBlock": "includes/MultiCodeBlock.php"
+	},
+    "Hooks": {
+        "ParserFirstCallInit": "MultiCodeBlock::onParserFirstCallInit",
+		"BeforePageDisplay": "MultiCodeBlock::onBeforePageDisplay"
+    },
+	"ResourceModules": {
+		"ext.multicodeblock.styles": {
+			"localBasePath": "resources/ext.multicodeblock/css",
+			"remoteExtPath": "MultiCodeBlock/resources/ext.multicodeblock/css",
+			"styles": [
+				"highlight.css",
+				"codeblock.css",
+				"selection.css"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		},
+		"ext.multicodeblock.js": {
+			"localBasePath": "resources/ext.multicodeblock/js",
+			"remoteExtPath": "MultiCodeBlock/resources/ext.multicodeblock/js",
+			"packageFiles": [
+				"multicodeblock.js"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		}
+	}
+}

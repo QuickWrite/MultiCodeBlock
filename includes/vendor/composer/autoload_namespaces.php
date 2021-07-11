@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'stringEncode' => array($vendorDir . '/paquettg/string-encode/src'),
     'Highlight\\' => array($vendorDir . '/scrivo/highlight.php'),
     'HighlightUtilities\\' => array($vendorDir . '/scrivo/highlight.php'),
 );

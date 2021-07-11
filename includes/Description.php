@@ -1,8 +1,5 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
-require_once 'CustomOptions.php';
-
-use PHPHtmlParser\Dom;
 
 /**
  * Stores the description of the code.
@@ -49,19 +46,14 @@ class Description {
      * @param string $dom A string that has the content of the <desc>-element.
      */
     public function setTexts(&$dom) {
-
-        $content = new Dom();
-
-        $content->loadStr($dom, getOptions());
-
-        $positions = $content->getElementsByTag('position');
+        $positions = $dom->getElementsByTagName('position');
         $numberOfPos = sizeof($positions);
         
         $hasOne = false;
 
         for($i = 0; $i < $numberOfPos; ++$i) {
             $key = $positions[$i]->getAttribute('line');
-            $content = $positions[$i]->innerHtml;
+            $content = $positions->item($i)->nodeValue;
 
             if($key == 1)
                 $hasOne = true;

@@ -39,8 +39,8 @@ class MultiCodeBlock {
 		$replaced = str_replace($code, '', $input);
 		$dom = getDOM($replaced);
 	
-		$codevariants = $dom->getElementsbyTag('codeblock')->toArray();
-		$descriptions = $dom->getElementsbyTag('desc')->toArray();
+		$codevariants = $dom->getElementsbyTagName('codeblock');
+		$descriptions = $dom->getElementsbyTagName('desc');
 	
 		$size = sizeof($codevariants);
 		$return = "";
@@ -49,7 +49,9 @@ class MultiCodeBlock {
 		$h1 = new \Highlight\Highlighter();
 	
 		for($i = 0; $i < $size; ++$i) {
-			$codeblock = createCodeBlock($codevariants[$i], $code[$i], $descriptions[$i], $parser, $h1);
+			$desc = $descriptions->item($i);
+
+			$codeblock = createCodeBlock($code[$i], $desc, $codevariants[$i]->getAttribute('lang'), $parser, $h1);
 			$return .= '<div class="tab-content '.($i == 0 ? 'tc-active' : '').'" data-tab="'.$i.'">'.$codeblock[0].'</div>';
 			array_push($languages, $codeblock[1]);
 		}

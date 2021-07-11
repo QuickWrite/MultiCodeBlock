@@ -1,11 +1,8 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
-require_once 'CustomOptions.php';
 
 require_once 'Description.php';
 require_once 'Code.php';
-
-use PHPHtmlParser\Dom;
 
 /**
  * Returns the DOM-Parser with custom options and the HTML-Tree
@@ -15,8 +12,13 @@ use PHPHtmlParser\Dom;
  * @return PHPHtmlParser\Dom The DOM-Element that has the HTML-Tree
  */
 function getDOM(&$content) {
-    $dom = new Dom();
-    $dom->loadStr($content, getOptions());
+    $dom = new DOMDocument();
+
+    $dom->validateOnParse = false;
+
+    libxml_use_internal_errors(true);
+    $dom->loadHTML($content);
+    libxml_clear_errors();
 
     return $dom;
 }
@@ -72,9 +74,7 @@ function replaceLang(string $lang) {
  * 
  * @return array The codeblock as the first element and the language as the second element.
  */
-function createCodeBlock(&$codevariant, &$code, &$description, Parser &$parser, \Highlight\Highlighter &$h1) {
-
-    $lang = $codevariant->getAttribute("lang");
+function createCodeBlock(&$code, &$description, $lang, Parser &$parser, \Highlight\Highlighter &$h1) {
     if($lang == null) {
         return array('<span style="color: red; font-size: 700;">No Lang Attribute</span>', 'No lang');
     }
@@ -82,7 +82,7 @@ function createCodeBlock(&$codevariant, &$code, &$description, Parser &$parser, 
     $lang = strtolower($lang);
 
     $code = new Code($code, $lang);
-    $desc = new Description(($description == null ? null : $description->innerHtml));
+    $desc = new Description($description);
     $highlight = $code->highlight($h1);
 
     $isObject = true;

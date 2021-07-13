@@ -20,11 +20,6 @@ class MultiCodeBlock {
 		$parser->setHook( 'multicodeblock', [ self::class, 'renderMultiCodeBlock' ] );
 	}
 
-	public static function onBeforePageDisplay( OutputPage &$out ) {
-		$out->addModuleStyles( [ 'ext.multicodeblock.styles' ] );
-		$out->addModules( [ 'ext.multicodeblock.js' ] );
-	}
-
 	/**
 	 * Returns a string based on the MultiCodeBlock HTML-Element
 	 * 
@@ -33,7 +28,11 @@ class MultiCodeBlock {
 	 * @param Parser $parser The MediaWiki syntax parser
 	 * @param PPFrame $frame MediaWiki frame
 	 */
-	public static function renderMultiCodeBlock( $input, array $args, Parser $parser, PPFrame $frame ) {
+	public static function renderMultiCodeBlock( string &$input, array &$args, Parser &$parser, PPFrame &$frame ) {
+		$out = $parser->getOutput();
+		$out->addModuleStyles( [ 'ext.multicodeblock.styles' ] );
+		$out->addModules( [ 'ext.multicodeblock.js' ] );
+
 		$code = findCodeBlocks($input);
     
 		$replaced = str_replace($code, '', $input);

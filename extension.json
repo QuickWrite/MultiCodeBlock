@@ -11,8 +11,7 @@
 		"MultiCodeBlock": "includes/MultiCodeBlock.php"
 	},
     "Hooks": {
-        "ParserFirstCallInit": "MultiCodeBlock::onParserFirstCallInit",
-		"BeforePageDisplay": "MultiCodeBlock::onBeforePageDisplay"
+        "ParserFirstCallInit": "MultiCodeBlock::onParserFirstCallInit"
     },
 	"ResourceModules": {
 		"ext.multicodeblock.styles": {

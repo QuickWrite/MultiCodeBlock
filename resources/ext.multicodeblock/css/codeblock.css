@@ -1,3 +1,7 @@
+.multicodeblock {
+    margin-top: calc(2em + 15px);
+}
+
 .code-table tbody tr pre {
     text-align: left;
 }
@@ -37,6 +41,33 @@
     border-right: 5px solid #b6c0da;
     background-color: #9c9ea1;
     color: #fff;
+}
+
+.outer.tab-content {
+    padding: 0;
+}
+
+.outer > .multicodeblock, .inner.tabs {
+    height: 100%;
+    border: none;
+    flex-direction: column;
+    margin-top: 0;
+}
+
+.inner.tab-content {
+    margin-top: calc(-2em - 10px);
+}
+
+.inner.tab-sidebar {
+    flex-direction: initial;
+    width: 100%;
+    display: flex;
+    height: fit-content;
+    transform: translateY(-100%);
+}
+
+.inner.tab-button {
+    padding: 10px;
 }
 
 .tab-content {

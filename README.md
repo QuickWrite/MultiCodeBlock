@@ -8,8 +8,8 @@ Creates a codeblock consisting of multiple languages and a special way of commen
 The input is structured in a HTML-Style:
 * `<multicodeblock>` - This is the main body of the codeblock and directly calls `MultiCodeBlock::renderMultiCodeBlock` by MediaWiki
     * `<codeblock lang="<language>">"` - These are the different codeblocks (languages). The order of these codeblocks decides the order in the navigation. The `language` is the filetype and not the name of the programming language itself, but it is possible to use the name.
-        * `<code>` - This is the code itself and is going to be highlighted.
-        * `<desc>` - The description is a block of different blocks of the description.
+        * `<code>` - This is the code itself and is going to be highlighted. (There can be multiple code blocks)
+        * `<desc>` - The description is a block of different blocks of the description. (There can be multiple `desc`-Tags)
             * `<position line="<line-number>">` - The positions are holding the description itself the the starting point of the description (relative to the code). It is possible to write in Wiki-Syntax in these.
 
 So it would be something like this:

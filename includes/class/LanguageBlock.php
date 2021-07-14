@@ -1,4 +1,16 @@
 <?php
+
+/**
+ * Saves the Description and the Code Objects
+ * 
+ * @global array $code The array of Code Objects
+ * @global array $desc The array of Description Objects
+ * @global int $size The size of the $code block.
+ * 
+ * @param array $codeblocks The codeblocks that should be added to $code
+ * @param $descriptions The descriptions that should be added to $desc
+ * @param string $lang The language of the Block
+ */
 class LanguageBlock {
     public array $code = [];
     public array $desc = [];
@@ -6,14 +18,21 @@ class LanguageBlock {
     public int $size = 0;
     private int $sizeDescription = 0;
 
-    public function __construct(array &$codeblocks = null, &$descriptions = null, &$lang = null) {
+    public function __construct(array &$codeblocks = null, &$descriptions = null, string &$lang = null) {
         if($codeblocks === null || $descriptions === null || $lang === null)
             return;
 
         $this->setLanguageBlock($codeblocks, $descriptions, $lang);
     }
 
-    public function setLanguageBlock(array &$codeblocks, &$descriptions, &$lang) {
+    /**
+     * Saves the Description and the Code Objects in the attributes.
+     * 
+     * @param array $codeblocks The codeblocks that should be added to $code
+     * @param $descriptions The descriptions that should be added to $desc
+     * @param string $lang The language of the Block
+     */
+    public function setLanguageBlock(array &$codeblocks, &$descriptions, string &$lang) {
         $sizeCode = 0;
 
         foreach($codeblocks as $code) {
@@ -31,6 +50,14 @@ class LanguageBlock {
         $this->sizeDescription = $sizeDesc;
     }
 
+    /**
+     * Returns the Description Object based on the index.
+     * When $index is larger then the size of $desc a new Description object will be returned.
+     * 
+     * @param int $index The index of the requested Description Object
+     * 
+     * @return Description The Object from the location or a new Description object.
+     */
     public function &getDescription(int $index) {
         if($this->sizeDescription < ($index + 1)) {
             $descr = new Description();

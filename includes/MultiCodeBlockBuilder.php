@@ -24,6 +24,15 @@ function getDOM(&$content) {
     return $dom;
 }
 
+/**
+ * Creates an HTML-Element to warp around the content.
+ * 
+ * @param string $code The code where the Element should wrap around
+ * @param int $index The index of the element
+ * @param string $extra Another class to be added to the element.
+ * 
+ * @return string The full object.
+ */
 function createTab(string &$code, int $index, string $extra = 'outer') {
     return '<div class="'.$extra.' tab-content '.($index == 0 ? 'tc-active' : '').'" data-tab="'.$index.'">'.$code.'</div>';
 }
@@ -33,6 +42,8 @@ function createTab(string &$code, int $index, string $extra = 'outer') {
  * 
  * @param array $lang All of the languages of the different codeblocks.
  * @param string $code The codeblocks as a whole.
+ * @param string $extra Another class to be added to the element.
+ * @param bool $addCopy If a copy button should be added to the element.
  * 
  * @return string The whole MultiCodeBlock.
  */

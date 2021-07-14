@@ -4,20 +4,22 @@ const tabButtons = document.getElementsByClassName('tab-button');
 for (let i = 0; i < tabButtons.length; i++) {
     tabButtons[i].addEventListener("click", () => {
         const button = tabButtons[i];
+        const outer = (button.classList.contains('outer') ? 'outer' : 'inner');
+
         const sidebar = button.parentElement;
         const tabContainer = sidebar.parentElement;
         const tabNumber = button.dataset.forTab;
-        const activateTab = tabContainer.querySelector(`.tab-content[data-tab="${tabNumber}"]`);
+        const activateTab = tabContainer.querySelector(`.${outer}.tab-content[data-tab="${tabNumber}"]`);
 
         {
-            const innerTabButtons = sidebar.getElementsByClassName('tab-button');
+            const innerTabButtons = sidebar.getElementsByClassName(outer + ' tab-button');
             for (let i = 0; i < innerTabButtons.length; i++) {
                 innerTabButtons[i].classList.remove('tb-active');
             }
         }
 
         {
-            const innerTabContents = tabContainer.getElementsByClassName('tab-content');
+            const innerTabContents = tabContainer.getElementsByClassName(outer + ' tab-content');
             for (let i = 0; i < innerTabContents.length; i++) {
                 innerTabContents[i].classList.remove('tc-active');
             }

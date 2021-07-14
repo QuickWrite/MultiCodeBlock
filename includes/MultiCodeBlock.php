@@ -28,33 +28,45 @@ class MultiCodeBlock {
 	 * @param Parser $parser The MediaWiki syntax parser
 	 * @param PPFrame $frame MediaWiki frame
 	 */
-	public static function renderMultiCodeBlock( string &$input, array &$args, Parser &$parser, PPFrame &$frame ) {
+	public static function renderMultiCodeBlock( string $input, array $args, Parser $parser, PPFrame $frame ) {
 		$out = $parser->getOutput();
 		$out->addModuleStyles( [ 'ext.multicodeblock.styles' ] );
 		$out->addModules( [ 'ext.multicodeblock.js' ] );
 
 		$code = findCodeBlocks($input);
     
-		$replaced = str_replace($code, '', $input);
+		$replaced = str_replace($code, 'test', $input);
 		$dom = getDOM($replaced);
 	
 		$codevariants = $dom->getElementsbyTagName('codeblock');
-		$descriptions = $dom->getElementsbyTagName('desc');
-	
+
+		$descriptions = [];
+		foreach($codevariants as $codevariant) {
+			array_push($descriptions, $codevariant->getElementsbyTagName('desc'));
+		}
+		$codeArr = [];
+		foreach($codevariants as $codevariant) {
+			array_push($codeArr, $codevariant->getElementsbyTagName('code'));
+		}
+		
 		$size = sizeof($codevariants);
 		$return = "";
 		$languages = array();
 
 		$h1 = new \Highlight\Highlighter();
 	
+		$last = 0;
 		for($i = 0; $i < $size; ++$i) {
-			$desc = $descriptions->item($i);
+			$length = sizeof($codeArr[$i]);
+			$codeBlocks = array_slice($code, $last, $length);
 
-			$codeblock = createCodeBlock($code[$i], $desc, $codevariants[$i]->getAttribute('lang'), $parser, $h1);
-			$return .= '<div class="tab-content '.($i == 0 ? 'tc-active' : '').'" data-tab="'.$i.'">'.$codeblock[0].'</div>';
+			$last += $length;
+
+			$codeblock = createCodeBlock($codeBlocks, $descriptions[$i], $codevariants[$i]->getAttribute('lang'), $parser, $h1);
+			$return .= createTab($codeblock[0], $i);
 			array_push($languages, $codeblock[1]);
 		}
 	
-		return createFrame($languages, $return);
+		return array(createFrame($languages, $return), 'markerType' => 'nowiki');
 	}
 }

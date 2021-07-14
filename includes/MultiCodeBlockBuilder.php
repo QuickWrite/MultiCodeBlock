@@ -1,8 +1,9 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
-require_once 'Description.php';
-require_once 'Code.php';
+require_once 'class/Description.php';
+require_once 'class/Code.php';
+require_once 'class/LanguageBlock.php';
 
 /**
  * Returns the DOM-Parser with custom options and the HTML-Tree
@@ -23,6 +24,10 @@ function getDOM(&$content) {
     return $dom;
 }
 
+function createTab(string &$code, int $index, string $extra = 'outer') {
+    return '<div class="'.$extra.' tab-content '.($index == 0 ? 'tc-active' : '').'" data-tab="'.$index.'">'.$code.'</div>';
+}
+
 /**
  * Returns the MultiCodeBlock as a whole.
  * 
@@ -31,18 +36,17 @@ function getDOM(&$content) {
  * 
  * @return string The whole MultiCodeBlock.
  */
-function createFrame(array $lang, string &$code) {
+function createFrame(array $lang, string &$code, string $extra = 'outer', bool $addCopy = false) {
     $size = sizeof($lang);
     $copyIcon = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>';
 
     $return = '<div class="multicodeblock">
-    <div class="copy" title="Copy code to clipboard">'.$copyIcon.'<span class="tooltip">Failed to copy!</span>
-    </div>
-    <div class="tabs">
-    <div class="tab-sidebar">
+    '.($addCopy ? '<div class="copy" title="Copy code to clipboard">'.$copyIcon.'<span class="tooltip">Failed to copy!</span></div>': '').'
+    <div class="'.$extra.' tabs">
+    <div class="'.$extra.' tab-sidebar">
     ';
     for($i = 0; $i < $size; $i++) {
-        $return .= '<button class="tab-button '.($i == 0 ? 'tb-active' : '').'" data-for-tab="'.$i.'">'.$lang[$i].'</button>';
+        $return .= '<button class="'.$extra.' tab-button '.($i == 0 ? 'tb-active' : '').'" data-for-tab="'.$i.'">'.$lang[$i].'</button>';
     }
     $return .= '</div>'.$code.'</div></div>';
 
@@ -66,31 +70,46 @@ function replaceLang(string $lang) {
 /**
  * Returns a single codeblock
  * 
- * @param DOMElement $codevariant The content of the `<codevariant>` element.
- * @param string $code The code inside the `<codevariant>` block.
- * @param DOMElement $description The content of the `<desc>` element.
- * @param Parser $parser The parser object by MediaWiki
- * @param Highlighter $h1 The highlighter object
+ * @param string $codeTags The code inside the `<codevariant>` block.
+ * @param DOMElement $descriptions The content of the `<desc>` element.
+ * @param string $lang The language of the `<codevariant>`.
+ * @param Parser $parser The parser object by MediaWiki.
+ * @param Highlighter $h1 The highlighter object.
  * 
  * @return array The codeblock as the first element and the language as the second element.
  */
-function createCodeBlock(&$code, &$description, $lang, Parser &$parser, \Highlight\Highlighter &$h1) {
+function createCodeBlock(array &$codeTags, DOMNodeList &$descriptions, $lang, Parser &$parser, \Highlight\Highlighter &$h1) {
     if($lang == null) {
         return array('<span style="color: red; font-size: 700;">No Lang Attribute</span>', 'No lang');
     }
     
     $lang = strtolower($lang);
 
-    $code = new Code($code, $lang);
-    $desc = new Description($description);
-    $highlight = $code->highlight($h1);
+    $languageBlock = new LanguageBlock($codeTags, $descriptions, $lang);
+    
+    $return = '';
 
-    $isObject = true;
-    if(!isset($highlight->value)) {
-        $isObject = false;
+    $versions = [];
+
+    for($i = 0;$i < $languageBlock->size; ++$i) {
+        if($languageBlock->code[$i] === null) {
+            continue;
+        }
+
+        $highlight = $languageBlock->code[$i]->highlight($h1);
+
+        $isObject = true;
+        if(!isset($highlight->value)) {
+            $isObject = false;
+        }
+    
+        array_push($versions, 'Version #'.($i + 1));
+        $return .= createTab(combineCodeDescription(($isObject ? $highlight->value : $highlight), $languageBlock->getDescription($i), $parser), $i, 'inner');
     }
+    
+    $return = createFrame($versions, $return, 'inner', true);
 
-    return array(combineCodeDescription(($isObject ? $highlight->value : $highlight), $desc, $parser), ($isObject ? replaceLang($highlight->language) : $lang));
+    return array($return, replaceLang($lang));
 }
 
 /**
@@ -102,7 +121,7 @@ function createCodeBlock(&$code, &$description, $lang, Parser &$parser, \Highlig
  * 
  * @return string A combined version of the code and the description with the MediaWiki syntax.
  */
-function combineCodeDescription(string $code, Description &$desc, Parser &$parser) {
+function &combineCodeDescription(string $code, Description &$desc, Parser &$parser) {
     $arr = explode("\n", $code);
     $size = sizeof($arr);
 

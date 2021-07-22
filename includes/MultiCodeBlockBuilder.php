@@ -49,12 +49,12 @@ function createTab(string &$code, int $index, string $extra = 'outer') {
  * 
  * @param array $lang All of the languages of the different codeblocks.
  * @param string $code The codeblocks as a whole.
- * @param string $extra Another class to be added to the element.
  * @param bool $addCopy If a copy button should be added to the element.
+ * @param string $extra Another class to be added to the element.
  * 
  * @return string The whole MultiCodeBlock.
  */
-function createFrame(array $lang, string &$code, string $extra = 'outer', bool $addCopy = false) {
+function createFrame(array &$lang, string &$code, bool $addCopy = true, string $extra = 'outer') {
     $size = sizeof($lang);
     $copyIcon = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>';
 
@@ -125,7 +125,7 @@ function createCodeBlock(array &$codeTags, DOMNodeList &$descriptions, $lang, Pa
         $return .= createTab(combineCodeDescription(($isObject ? $highlight->value : $highlight), $languageBlock->getDescription($i), $parser), $i, 'inner');
     }
     
-    $return = createFrame($versions, $return, 'inner', true);
+    $return = createFrame($versions, $return, false, 'inner');
 
     return array($return, replaceLang($lang));
 }
@@ -145,7 +145,12 @@ function &combineCodeDescription(string $code, Description &$desc, Parser &$pars
 
     $keysSize = sizeof($desc->keys);
 
-    $return = '<table class="code-table">';
+    $return = '<table class="code-table">
+        <tr class="table-header">
+            <th>Code</th>
+            <th>Description</th>
+        </tr>
+    ';
 
     $isFirst = ($arr[0] === '' ? true : false);
 

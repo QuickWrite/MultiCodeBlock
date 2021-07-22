@@ -102,7 +102,7 @@ for(let i = 0; i < copyElems.length; i++) {
         let fail = false;
 
         if (navigator.clipboard) {
-            const code = elem.parentElement.getElementsByClassName('tc-active')[0].getElementsByClassName('first');
+            const code = elem.parentElement.getElementsByClassName('outer tc-active')[0].getElementsByClassName('inner tc-active')[0].getElementsByClassName('first');
             let text = '';
             for(let i = 0; i < code.length; i++) {
                 text += code[i].innerText;

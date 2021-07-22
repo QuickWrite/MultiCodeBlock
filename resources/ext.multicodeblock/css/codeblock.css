@@ -56,6 +56,8 @@
 
 .inner.tab-content {
     margin-top: calc(-2em - 10px);
+    padding: 0;
+    padding-top: 15px;
 }
 
 .inner.tab-sidebar {
@@ -131,6 +133,10 @@
     text-align: left;
     font-weight: normal;
     font-size: 15.2px;
+}
+
+.code-table th.second {
+    border-bottom: solid .5px rgba(204, 204, 204, .5);
 }
 
 .copy {

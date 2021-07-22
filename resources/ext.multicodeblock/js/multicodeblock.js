@@ -33,56 +33,58 @@ for (let i = 0; i < tabButtons.length; i++) {
 /* Hover mechanics */
 
 const second = document.getElementsByClassName('second');
-let lockedElems = [];
+let lockedElems = null;
+let firstClick = true;
 
-let secondMouseDown = false;
-let lastMouseUp = false;
-let lastMouseDown = false;
-let lockClick = true;
+let currentElem = null;
 
 for(let i = 0; i < second.length; i++) {
     second[i].addEventListener('mouseover', () => {
-        if(!lastMouseUp) {
-            second[i].classList.add('onHover');
-        }
+        second[i].classList.add('onHover');
 
-        if(secondMouseDown) {
-            let secondElem = second[i].parentElement.getElementsByClassName('first')[0];
-            secondElem.classList.add('locked');
-            lockedElems.push(secondElem);
-        }
+        currentElem = second[i];
     });
 
     second[i].addEventListener('mouseout', () => {
-        if(!secondMouseDown && !lastMouseUp) {
-            second[i].classList.remove('onHover');
-        }
+        currentElem = null;
+
+        if(lockedElems !== null)
+            return;
+        
+        second[i].classList.remove('onHover');
     });
 
     second[i].addEventListener('mousedown', () => {
-        secondMouseDown = true;
-        lastMouseDown = true;
-    });
+        lockedElems = second[i].parentElement.parentElement.getElementsByClassName('first');
 
-    second[i].addEventListener('mouseup', () => {
-        secondMouseDown = false;
-        lastMouseUp = true;
-        setTimeout(function(){lockClick = false;},5);
+        for(let i = 0; i < lockedElems.length; ++i) {
+            lockedElems[i].classList.add('locked');
+        }
     });
 }
 
-document.addEventListener('click', () => {
-    if(!lockClick) {
-        lastMouseUp = false;
-        for(let i = 0;i < lockedElems.length; i++) {
-            lockedElems[i].classList.remove('locked');
-        }
-        for(let i = 0; i < second.length; i++) {
-            second[i].classList.remove('onHover');
-        }
-
-        lockClick = true;
+document.addEventListener('click', (event) => {
+    if(lockedElems === null)
+        return;
+    
+    if(firstClick) {
+        firstClick = false;
+        return;
     }
+
+    for(let i = 0; i < lockedElems.length; ++i) {
+        lockedElems[i].classList.remove('locked');
+    }
+
+    lockedElems = null;
+
+    for(let i = 0; i < second.length; ++i) {
+        second[i].classList.remove('onHover');
+    }
+
+    firstClick = true;
+
+    currentElem?.classList.add('onHover');
 });
 
 /* Copy */

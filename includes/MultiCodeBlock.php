@@ -1,5 +1,12 @@
 <?php
 /**
+ * This file is part of MultiCodeBlock.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/**
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */

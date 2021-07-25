@@ -1,3 +1,10 @@
+/**
+ * This file is part of MultiCodeBlock.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 /* Switching between languages */
 const tabButtons = document.getElementsByClassName('tab-button');
 

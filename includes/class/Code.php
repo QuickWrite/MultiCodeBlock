@@ -1,4 +1,10 @@
 <?php
+/**
+ * This file is part of MultiCodeBlock.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 /**
  * Saves the code and the language as well as highlights the code.

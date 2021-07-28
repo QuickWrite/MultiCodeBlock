@@ -6,7 +6,7 @@
  * file that was distributed with this source code.
  */
 
- /**
+/**
  * Returns the DOM-Parser with custom options and the HTML-Tree
  * 
  * @param string $content The content that should be parsed by the DOM-Parser

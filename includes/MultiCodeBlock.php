@@ -15,7 +15,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( -1 );
 }
 
-require_once 'MultiCodeBlockBuilder.php';
+require_once 'require.php';
 
 /**
  * The main class for the MultiCodeBlock MediaWiki-Extension.

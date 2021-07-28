@@ -7,20 +7,7 @@
  */
 
 /**
- * Creates an HTML-Element to warp around the content.
- * 
- * @param string $code The code where the Element should wrap around
- * @param int $index The index of the element
- * @param string $extra Another class to be added to the element.
- * 
- * @return string The full object.
- */
-function createTab(string &$code, int $index, string $extra = 'outer') {
-    return '<div class="'.$extra.' tab-content '.($index == 0 ? 'tc-active' : '').'" data-tab="'.$index.'">'.$code.'</div>';
-}
-
-/**
- * Returns the MultiCodeBlock as a whole.
+ * Returns the MultiCodeBlock as a whole element.
  * 
  * @param array $lang All of the languages of the different codeblocks.
  * @param string $code The codeblocks as a whole.
@@ -55,7 +42,7 @@ function createFrame(array &$lang, string &$code, bool $addCopy = true, string $
  * @param Parser $parser The parser object by MediaWiki.
  * @param Highlighter $h1 The highlighter object.
  * 
- * @return array The codeblock as the first element and the language as the second element.
+ * @return array Array consisting of the codeblock and the language of the specific codeblock.
  */
 function createCodeBlock(array &$codeTags, DOMNodeList &$descriptions, $lang, Parser &$parser, \Highlight\Highlighter &$h1) {
     if($lang == null) {
@@ -89,4 +76,17 @@ function createCodeBlock(array &$codeTags, DOMNodeList &$descriptions, $lang, Pa
     $return = createFrame($versions, $return, false, 'inner');
 
     return array($return, replaceLang($lang));
+}
+
+/**
+ * Creates an HTML-Element to wrap around the content.
+ * 
+ * @param string $content The content where the Element should wrap around
+ * @param int $index The index of the element
+ * @param string $extra Another class to be added to the element.
+ * 
+ * @return string The full object.
+ */
+function createTab(string &$content, int $index, string $extra = 'outer') {
+    return '<div class="'.$extra.' tab-content '.($index == 0 ? 'tc-active' : '').'" data-tab="'.$index.'">'.$content.'</div>';
 }

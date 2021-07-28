@@ -23,6 +23,11 @@ require_once 'require.php';
  * @author QuickWrite
  */
 class MultiCodeBlock {
+	/**
+	 * Sets a hook for the MediaWiki parser to be able to use the <multicodeblock>-Tag in the MediaWiki syntax.
+	 * 
+	 * @param Parser &$parser The Parser Element as a reference.
+	 */
 	public static function onParserFirstCallInit( Parser &$parser ) {
 		$parser->setHook( 'multicodeblock', [ self::class, 'renderMultiCodeBlock' ] );
 	}

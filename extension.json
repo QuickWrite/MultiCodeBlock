@@ -7,12 +7,12 @@
 	"license-name": "Apache-2.0",
 	"type": "validextensionclass",
 	"manifest_version": 1,
-    "AutoloadClasses": {
+	"AutoloadClasses": {
 		"MultiCodeBlock": "includes/MultiCodeBlock.php"
 	},
-    "Hooks": {
-        "ParserFirstCallInit": "MultiCodeBlock::onParserFirstCallInit"
-    },
+	"Hooks": {
+		"ParserFirstCallInit": "MultiCodeBlock::onParserFirstCallInit"
+	},
 	"ResourceModules": {
 		"ext.multicodeblock.styles": {
 			"localBasePath": "resources/ext.multicodeblock/css",

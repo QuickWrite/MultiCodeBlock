@@ -6,6 +6,8 @@
  * file that was distributed with this source code.
  */
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
 /**
  * Returns the MultiCodeBlock as a whole element.
  * 

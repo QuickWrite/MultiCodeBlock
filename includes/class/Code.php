@@ -17,10 +17,10 @@
  * @param string $lang The language the code should be highlighted in.
  */
 class Code {
-    public $code;
-    public $lang;
+    public string $code = '';
+    public string $lang = '';
     
-    public function __construct(&$code, $lang) {
+    public function __construct(string &$code, string $lang) {
         $this->setCode($code, $lang);
     }
 
@@ -31,7 +31,7 @@ class Code {
      * @return string The highlighted version the the $code.
      */
     public function &highlight(\Highlight\Highlighter &$hl) {
-        $highlighted;
+        $highlighted = null;
 
         try {
             $highlighted = $hl->highlight($this->lang, $this->code);
@@ -48,7 +48,7 @@ class Code {
      * @param string $code The code that should be inserted into the class
      * @param string $lang The language the code is written in.
      */
-    public function setCode($code, $lang) {
+    public function setCode(string $code, string &$lang) {
         $this->code = $code;
         $this->lang = $lang;
     }

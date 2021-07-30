@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of MultiCodeBlock.
  *
@@ -6,79 +7,128 @@
  * file that was distributed with this source code.
  */
 
+require_once __DIR__ . '/vendor/autoload.php';
+
+require_once 'class/Description.php';
+require_once 'class/Code.php';
+require_once 'class/LanguageBlock.php';
+
+require_once 'utils/HTMLFramework.php';
+require_once 'utils/getData.php';
+
 /**
- * Protect against register_globals vulnerabilities.
- * This line must be present before any global variable is referenced.
+ * Returns a string based on the MultiCodeBlock HTML-Element
+ * 
+ * @param string $input The content of the MultiCodeBlock HTML-Element
+ * @param array $args The arguments of the MultiCodeBlock HTML-Element
+ * @param Parser $parser The MediaWiki syntax parser
+ * @param PPFrame $frame MediaWiki frame
  */
-if( !defined( 'MEDIAWIKI' ) ) {
-	echo( "This is an extension to the MediaWiki package and cannot be run standalone.\n" );
-	die( -1 );
+function createMultiCodeBlock(string &$input, Parser &$parser) {
+    $out = $parser->getOutput();
+    $out->addModuleStyles(['ext.multicodeblock.styles']);
+    $out->addModules(['ext.multicodeblock.js']);
+
+    $code = findCodeBlocks($input);
+
+    $replaced = str_replace($code, 'test', $input);
+    $dom = getDOM($replaced);
+
+    $codevariants = $dom->getElementsbyTagName('codeblock');
+
+    $descriptions = [];
+    foreach ($codevariants as $codevariant) {
+        array_push($descriptions, $codevariant->getElementsbyTagName('desc'));
+    }
+    $codeArr = [];
+    foreach ($codevariants as $codevariant) {
+        array_push($codeArr, $codevariant->getElementsbyTagName('code'));
+    }
+
+    $size = sizeof($codevariants);
+    $return = "";
+    $languages = array();
+
+    $h1 = new \Highlight\Highlighter();
+
+    $last = 0;
+    for ($i = 0; $i < $size; ++$i) {
+        $length = sizeof($codeArr[$i]);
+        $codeBlocks = array_slice($code, $last, $length);
+
+        $last += $length;
+
+        $codeblock = createCodeBlock($codeBlocks, $descriptions[$i], $codevariants[$i]->getAttribute('lang'), $parser, $h1);
+        $return .= createTab($codeblock[0], $i);
+        array_push($languages, $codeblock[1]);
+    }
+
+    return array(createFrame($languages, $return), 'markerType' => 'nowiki');
 }
 
-require_once 'require.php';
+/**
+ * Returns a human-readable-version of the language.
+ * 
+ * @param string $lang The specific language token
+ * 
+ * @return string The replaced language.
+ */
+function replaceLang(string $lang) {
+    $file = file_get_contents(__DIR__ . '/languages/languages.json');
+    $languages = json_decode($file, true);
+
+    return $languages[$lang];
+}
 
 /**
- * The main class for the MultiCodeBlock MediaWiki-Extension.
+ * Returns the combined version of the code and the description.
  * 
- * @author QuickWrite
+ * @param string $code The code inside the `<code>` element
+ * @param Description $desc The description as a Description object
+ * @param Parser $parser The parser object by MediaWiki
+ * 
+ * @return string A combined version of the code and the description with the MediaWiki syntax.
  */
-class MultiCodeBlock {
-	/**
-	 * Sets a hook for the MediaWiki parser to be able to use the <multicodeblock>-Tag in the MediaWiki syntax.
-	 * 
-	 * @param Parser &$parser The Parser Element as a reference.
-	 */
-	public static function onParserFirstCallInit( Parser &$parser ) {
-		$parser->setHook( 'multicodeblock', [ self::class, 'renderMultiCodeBlock' ] );
-	}
+function &combineCodeDescription(string $code, Description &$desc, Parser &$parser) {
+    $arr = explode("\n", $code);
+    $size = sizeof($arr);
 
-	/**
-	 * Returns a string based on the MultiCodeBlock HTML-Element
-	 * 
-	 * @param string $input The content of the MultiCodeBlock HTML-Element
-	 * @param array $args The arguments of the MultiCodeBlock HTML-Element
-	 * @param Parser $parser The MediaWiki syntax parser
-	 * @param PPFrame $frame MediaWiki frame
-	 */
-	public static function renderMultiCodeBlock( string $input, array $args, Parser $parser, PPFrame $frame ) {
-		$out = $parser->getOutput();
-		$out->addModuleStyles( [ 'ext.multicodeblock.styles' ] );
-		$out->addModules( [ 'ext.multicodeblock.js' ] );
+    $keysSize = sizeof($desc->keys);
 
-		$code = findCodeBlocks($input);
-    
-		$replaced = str_replace($code, 'test', $input);
-		$dom = getDOM($replaced);
-	
-		$codevariants = $dom->getElementsbyTagName('codeblock');
+    $return = '<table class="code-table">
+        <tr class="table-header">
+            <th>Code</th>
+            <th>Description</th>
+        </tr>
+    ';
 
-		$descriptions = [];
-		foreach($codevariants as $codevariant) {
-			array_push($descriptions, $codevariant->getElementsbyTagName('desc'));
-		}
-		$codeArr = [];
-		foreach($codevariants as $codevariant) {
-			array_push($codeArr, $codevariant->getElementsbyTagName('code'));
-		}
-		
-		$size = sizeof($codevariants);
-		$return = "";
-		$languages = array();
+    $isFirst = ($arr[0] === '' ? true : false);
 
-		$h1 = new \Highlight\Highlighter();
-	
-		$last = 0;
-		for($i = 0; $i < $size; ++$i) {
-			$length = sizeof($codeArr[$i]);
-			$codeBlocks = array_slice($code, $last, $length);
+    for ($i = (!$isFirst ? 0 : 1), $j = 0; $i < $size; ++$j) {
+        $return .= '<tr><th class="first"><pre><ol start="' . ($i + 1 - $isFirst) . '">';
 
-			$last += $length;
+        $nextKey = 0;
+        if ($keysSize > $j + 1) {
+            $nextKey = $desc->keys[$j + 1] - 1 + $isFirst;
 
-			$codeblock = createCodeBlock($codeBlocks, $descriptions[$i], $codevariants[$i]->getAttribute('lang'), $parser, $h1);
-			$return .= createTab($codeblock[0], $i);
-			array_push($languages, $codeblock[1]);
-		}
-	
-		return array(createFrame($languages, $return), 'markerType' => 'nowiki');
-	}
+            if ($nextKey > $size) {
+                $nextKey = $size;
+            }
+        } else {
+            $nextKey = $size;
+        }
+
+        while ($i < $nextKey) {
+            if (!($i + 1 == $size && $arr[$i] === ''))
+                $return .= '<li><span class="line">' . ($arr[$i] !== '' ? $arr[$i] : '&nbsp;') . '</span></li>';
+
+            $i++;
+        }
+
+        $return .= '</pre></ol></th><th class="second mw-body-content">' . $parser->recursiveTagParse($desc->texts[$j]) . '</td>';
+    }
+
+    $return .= '</table>';
+
+    return $return;
 }

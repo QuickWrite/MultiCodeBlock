@@ -8,10 +8,10 @@
 	"type": "validextensionclass",
 	"manifest_version": 1,
 	"AutoloadClasses": {
-		"MultiCodeBlock": "includes/MultiCodeBlock.php"
+		"MultiCodeBlockHooks": "includes/hooks/MultiCodeBlockHooks.php"
 	},
 	"Hooks": {
-		"ParserFirstCallInit": "MultiCodeBlock::onParserFirstCallInit"
+		"ParserFirstCallInit": "MultiCodeBlockHooks::onParserFirstCallInit"
 	},
 	"ResourceModules": {
 		"ext.multicodeblock.styles": {

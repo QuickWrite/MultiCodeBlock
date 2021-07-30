@@ -6,8 +6,6 @@
  * file that was distributed with this source code.
  */
 
-require_once __DIR__ . '/../vendor/autoload.php';
-
 /**
  * Stores the description of the code.
  * 
@@ -16,14 +14,13 @@ require_once __DIR__ . '/../vendor/autoload.php';
  * @global array $texts An array of all the different descriptions.
  * @global array $keys The lines where the descriptions should start.
  * 
- * @param string $dom A string that has the content of the <desc>-element.
+ * @param DOMDocument $dom A string that has the content of the <desc>-element.
  */
 class Description {
     public $texts = array();
     public $keys = array();
-    private $parser;
 
-    public function __construct($dom = null) {
+    public function __construct(DOMDocument $dom = null) {
         if($dom === null) {
             array_push($this->texts, '');
             array_push($this->keys, 1);
@@ -50,9 +47,9 @@ class Description {
     /**
      * Inserts the description into the attrributes.
      * 
-     * @param string $dom A string that has the content of the <desc>-element.
+     * @param DOMDocument $dom A string that has the content of the <desc>-element.
      */
-    public function setTexts(&$dom) {
+    public function setTexts(DOMDocument &$dom) {
         $positions = $dom->getElementsByTagName('position');
         $numberOfPos = sizeof($positions);
         

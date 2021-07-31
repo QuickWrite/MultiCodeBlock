@@ -11,9 +11,9 @@
  * 
  * @param string $content The content that should be parsed by the DOM-Parser
  * 
- * @return PHPHtmlParser\Dom The DOM-Element that has the HTML-Tree
+ * @return DOMDocument The DOM-Element that has the HTML-Tree
  */
-function getDOM(&$content) {
+function getDOM(string &$content) {
     $dom = new DOMDocument();
 
     $dom->validateOnParse = false;
@@ -26,7 +26,9 @@ function getDOM(&$content) {
 }
 
 /**
- * Returns the code in the `<code>` tags.
+ * Returns all of the blocks with code inside.
+ * They are determined by having the 
+ * `<code>{code}</code>`-structure.
  * 
  * @param string $codeblock The object where all of the codeblocks should be removed.
  * 

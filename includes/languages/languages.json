@@ -21,6 +21,7 @@
     "basic": "BASIC",
     "bnf": "BNF",
     "brainfuck": "Brainfuck",
+    "c": "C",
     "cal": "C/AL",
     "capnproto": "Cap’n Proto",
     "ceylon": "Ceylon",

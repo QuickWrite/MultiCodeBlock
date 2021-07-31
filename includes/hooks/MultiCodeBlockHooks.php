@@ -10,10 +10,6 @@
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
-if( !defined( 'MEDIAWIKI' ) ) {
-	echo( "This is an extension to the MediaWiki package and cannot be run standalone.\n" );
-	die( -1 );
-}
 
 /**
  * The hooks class for the MultiCodeBlock MediaWiki-Extension.
@@ -24,7 +20,7 @@ class MultiCodeBlockHooks {
 	/**
 	 * Sets a hook for the MediaWiki parser to be able to use the <multicodeblock>-Tag in the MediaWiki syntax.
 	 * 
-	 * @param Parser &$parser The Parser Element as a reference.
+	 * @param Parser $parser The Parser Element as a reference.
 	 */
 	public static function onParserFirstCallInit( Parser &$parser ) {
 		$parser->setHook( 'multicodeblock', [ self::class, 'renderMultiCodeBlock' ] );

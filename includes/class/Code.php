@@ -48,7 +48,7 @@ class Code {
      * @param string $code The code that should be inserted into the class
      * @param string $lang The language the code is written in.
      */
-    public function setCode(string $code, string &$lang) {
+    public function setCode(string &$code, string &$lang) {
         $this->code = $code;
         $this->lang = $lang;
     }

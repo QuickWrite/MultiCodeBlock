@@ -30,9 +30,23 @@ class MultiCodeBlockHooks {
 		$parser->setHook( 'multicodeblock', [ self::class, 'renderMultiCodeBlock' ] );
 	}
 
+	/**
+	 * Returns the full MultiCodeBlock with differnt flags and adds specific Modules to the parser.
+	 * 
+	 * @param string $input The content of the MultiCodeBlock HTML-Element
+ 	 * @param array $args The arguments of the MultiCodeBlock HTML-Element
+ 	 * @param Parser $parser The MediaWiki syntax parser
+	 * @param PPFrame $frame MediaWiki frame
+	 * 
+	 * @return array The MultiCodeBlock with flags as an array.
+	 */
 	public static function renderMultiCodeBlock(string $input, array $args, Parser $parser, PPFrame $frame) {
 		require_once __DIR__ . '/../MultiCodeBlock.php';
 
-		return createMultiCodeBlock($input, $parser);
+		$out = $parser->getOutput();
+    	$out->addModuleStyles(['ext.multicodeblock.styles']);
+    	$out->addModules(['ext.multicodeblock.js']);
+
+		return [createMultiCodeBlock($input, $parser), 'noparse' => true, 'isHTML' => true, 'markerType' => 'nowiki'];
 	}
 }

@@ -20,15 +20,11 @@ require_once 'utils/getData.php';
  * Returns a string based on the MultiCodeBlock HTML-Element
  * 
  * @param string $input The content of the MultiCodeBlock HTML-Element
- * @param array $args The arguments of the MultiCodeBlock HTML-Element
  * @param Parser $parser The MediaWiki syntax parser
- * @param PPFrame $frame MediaWiki frame
+ * 
+ * @return string The MultiCodeBlock
  */
 function createMultiCodeBlock(string &$input, Parser &$parser) {
-    $out = $parser->getOutput();
-    $out->addModuleStyles(['ext.multicodeblock.styles']);
-    $out->addModules(['ext.multicodeblock.js']);
-
     $code = findCodeBlocks($input);
 
     $replaced = str_replace($code, 'test', $input);
@@ -63,7 +59,7 @@ function createMultiCodeBlock(string &$input, Parser &$parser) {
         array_push($languages, $codeblock[1]);
     }
 
-    return array(createFrame($languages, $return), 'markerType' => 'nowiki');
+    return createFrame($languages, $return);
 }
 
 /**

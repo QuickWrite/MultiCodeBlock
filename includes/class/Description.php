@@ -14,13 +14,13 @@
  * @global array $texts An array of all the different descriptions.
  * @global array $keys The lines where the descriptions should start.
  * 
- * @param DOMDocument $dom A string that has the content of the <desc>-element.
+ * @param $dom A string that has the content of the <desc>-element.
  */
 class Description {
     public $texts = array();
     public $keys = array();
 
-    public function __construct(DOMDocument $dom = null) {
+    public function __construct($dom = null) {
         if($dom === null) {
             array_push($this->texts, '');
             array_push($this->keys, 1);
@@ -47,9 +47,9 @@ class Description {
     /**
      * Inserts the description into the attrributes.
      * 
-     * @param DOMDocument $dom A string that has the content of the <desc>-element.
+     * @param $dom A string that has the content of the <desc>-element.
      */
-    public function setTexts(DOMDocument &$dom) {
+    public function setTexts(&$dom) {
         $positions = $dom->getElementsByTagName('position');
         $numberOfPos = sizeof($positions);
         

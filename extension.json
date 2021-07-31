@@ -2,7 +2,7 @@
 	"name": "MultiCodeBlock",
 	"author": "QuickWrite",
 	"url": "https://github.com/QuickWrite/MultiCodeBlock",
-	"description": "Creates a codeblock consisting of multiple languages and a special way of commenting the code.",
+	"description": "Creates a codeblock consisting of multiple languages and a custom way of commenting the code.",
 	"version": "0.1.0",
 	"license-name": "Apache-2.0",
 	"type": "validextensionclass",

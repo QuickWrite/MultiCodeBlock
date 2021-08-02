@@ -107,11 +107,8 @@
 .code-table pre {
     border: none;
     margin-top: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-left: 30px;
+    padding: 0 0 0 30px;
     margin-bottom: -4px;
-    background-color: none !important;
     overflow: initial;
 }
 
@@ -219,6 +216,15 @@
     border-bottom: #ccc 1px solid;
     margin: 0;
     padding-bottom: 3px;
+}
+
+.second *:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+.first {
+    display: contents;
 }
 
 @keyframes bounceIn {

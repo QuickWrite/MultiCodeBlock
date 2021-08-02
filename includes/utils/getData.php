@@ -18,9 +18,12 @@ function getDOM(string &$content) {
 
     $dom->validateOnParse = false;
 
-    libxml_use_internal_errors(true);
-    $dom->loadHTML($content);
-    libxml_clear_errors();
+    /**
+     * mb_convert_encoding() is needed as loadHTML itself
+     * does not use UTF-8 and characters like ä are
+     * returned as a wrong character.
+     */
+    $dom->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_BIGLINES | LIBXML_COMPACT | LIBXML_NOERROR );
 
     return $dom;
 }

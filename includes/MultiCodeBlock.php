@@ -42,7 +42,7 @@ function createMultiCodeBlock(string &$input, Parser &$parser) {
 
     $size = sizeof($codevariants);
     $return = "";
-    $languages = array();
+    $languages = [];
 
     $h1 = new \Highlight\Highlighter();
 

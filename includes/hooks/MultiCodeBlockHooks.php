@@ -43,6 +43,6 @@ class MultiCodeBlockHooks {
     	$out->addModuleStyles(['ext.multicodeblock.styles']);
     	$out->addModules(['ext.multicodeblock.js']);
 
-		return [createMultiCodeBlock($input, $parser), 'noparse' => true, 'isHTML' => true, 'markerType' => 'nowiki'];
+		return [ createMultiCodeBlock($input, $parser), 'noparse' => true, 'isHTML' => true, 'markerType' => 'nowiki' ];
 	}
 }

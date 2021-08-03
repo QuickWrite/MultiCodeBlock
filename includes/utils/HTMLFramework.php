@@ -48,7 +48,7 @@ function createFrame(array &$lang, string &$code, bool $addCopy = true, string $
  */
 function createCodeBlock(array &$codeTags, DOMNodeList &$descriptions, $lang, Parser &$parser, \Highlight\Highlighter &$h1) {
     if($lang == null) {
-        return array('<span style="color: red; font-size: 700;">No Lang Attribute</span>', 'No lang');
+        return [ '<span style="color: red; font-size: 700;">No Lang Attribute</span>', 'No lang' ];
     }
     
     $lang = strtolower($lang);
@@ -77,7 +77,7 @@ function createCodeBlock(array &$codeTags, DOMNodeList &$descriptions, $lang, Pa
     
     $return = createFrame($versions, $return, false, 'inner');
 
-    return array($return, replaceLang($lang));
+    return [ $return, replaceLang($lang) ];
 }
 
 /**

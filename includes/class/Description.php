@@ -17,8 +17,8 @@
  * @param $dom A string that has the content of the <desc>-element.
  */
 class Description {
-    public $texts = array();
-    public $keys = array();
+    public $texts = [];
+    public $keys = [];
 
     public function __construct($dom = null) {
         if($dom === null) {

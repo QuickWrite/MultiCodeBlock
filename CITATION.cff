@@ -17,5 +17,5 @@ message: |
     "If you use this software, please cite it using these metadata.
     You could use your own citation, but this is in many cases easier to use."
 title: MultiCodeBlock
-version: "0.1.0"
+version: "0.1.1"
 ...

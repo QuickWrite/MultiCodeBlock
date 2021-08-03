@@ -120,7 +120,7 @@ function &combineCodeDescription(string $code, Description &$desc, Parser &$pars
             $i++;
         }
 
-        $return .= '</pre></ol></th><th class="second">' . $parser->recursiveTagParse($desc->texts[$j]) . '</td>';
+        $return .= '</pre></ol></th><th class="second">' . $parser->recursiveTagParseFully($desc->texts[$j]) . '</td>';
     }
 
     $return .= '</table>';

@@ -1,0 +1,14 @@
+{
+    "@metadata": {
+        "authors": [
+            "QuickWrite"
+        ]
+    },
+    "copy_text_clipboard": "Copy code to clipboard",
+    "copy_failed": "Failed to copy!",
+    "copy_success": "Copied!",
+
+    "codeblock_code_version": "Version #$1",
+    "code_title": "Code",
+    "code_description_title": "Description"
+}

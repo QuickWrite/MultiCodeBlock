@@ -7,6 +7,11 @@
 	"license-name": "Apache-2.0",
 	"type": "validextensionclass",
 	"manifest_version": 1,
+	"MessagesDirs": {
+		"MultiCodeBlock": [
+			"i18n"
+		]
+	},
 	"AutoloadClasses": {
 		"MultiCodeBlockHooks": "includes/hooks/MultiCodeBlockHooks.php"
 	},

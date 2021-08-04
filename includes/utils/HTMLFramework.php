@@ -23,7 +23,7 @@ function createFrame(array &$lang, string &$code, bool $addCopy = true, string $
     $copyIcon = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>';
 
     $return = '<div class="multicodeblock">
-    '.($addCopy ? '<div class="copy" title="Copy code to clipboard">'.$copyIcon.'<span class="tooltip">Failed to copy!</span></div>': '').'
+    '.($addCopy ? '<div class="copy" title="' . wfMessage('copy_text_clipboard') . '">'.$copyIcon.'<span class="tooltip">' . wfMessage('copy_success') . '|' . wfMessage('copy_failed') . '</span></div>': '').'
     <div class="'.$extra.' tabs">
     <div class="'.$extra.' tab-sidebar">
     ';
@@ -71,7 +71,7 @@ function createCodeBlock(array &$codeTags, DOMNodeList &$descriptions, $lang, Pa
             $isObject = false;
         }
     
-        array_push($versions, 'Version #'.($i + 1));
+        array_push($versions, wfMessage('codeblock_code_version', ($i + 1)));
         $return .= createTab(combineCodeDescription(($isObject ? $highlight->value : $highlight), $languageBlock->getDescription($i), $parser), $i, 'inner');
     }
     

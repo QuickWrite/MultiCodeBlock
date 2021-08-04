@@ -98,6 +98,8 @@ document.addEventListener('click', (event) => {
 
 let copyElems = document.getElementsByClassName('copy');
 
+const messages = copyElems[0].getElementsByClassName('tooltip')[0].innerHTML.split('|');
+
 for(let i = 0; i < copyElems.length; i++) {
     copyElems[i].addEventListener('click', async () => {
         const elem = copyElems[i];
@@ -124,13 +126,18 @@ for(let i = 0; i < copyElems.length; i++) {
             fail = true;
         }
 
-        if(fail) {
-            tooltip.innerText = 'Failed to copy!';
+        if(!fail) {
+            // Success
+            tooltip.innerText = messages[0];
         } else {
-            tooltip.innerText = 'Copied!';
+            // Fail
+            tooltip.innerText = messages[1];
         }
 
         tooltip.style.visibility = 'visible';
-        setTimeout(() => {tooltip.style.visibility = 'hidden';},2000);
+
+        setTimeout(() => {
+            tooltip.style.visibility = 'hidden';
+        }, 2000);
     });
 }

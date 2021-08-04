@@ -92,8 +92,8 @@ function &combineCodeDescription(string $code, Description &$desc, Parser &$pars
 
     $return = '<table class="code-table">
         <tr class="table-header">
-            <th>Code</th>
-            <th>Description</th>
+            <th>' . wfMessage('code_title') . '</th>
+            <th>' . wfMessage('code_description_title') . '</th>
         </tr>
     ';
 

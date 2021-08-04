@@ -7,11 +7,6 @@
  */
 
 /**
- * Protect against register_globals vulnerabilities.
- * This line must be present before any global variable is referenced.
- */
-
-/**
  * The hooks class for the MultiCodeBlock MediaWiki-Extension.
  * 
  * @author QuickWrite

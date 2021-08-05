@@ -62,20 +62,6 @@ function createMultiCodeBlock(string &$input, Parser &$parser) {
 }
 
 /**
- * Returns a human-readable-version of the language.
- * 
- * @param string $lang The specific language token
- * 
- * @return string The replaced language.
- */
-function replaceLang(string $lang) {
-    $file = file_get_contents(__DIR__ . '/languages/languages.json');
-    $languages = json_decode($file, true);
-
-    return $languages[$lang];
-}
-
-/**
  * Returns the combined version of the code and the description.
  * 
  * @param string $code The code inside the `<code>` element

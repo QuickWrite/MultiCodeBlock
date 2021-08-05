@@ -29,6 +29,28 @@ function getDOM(string &$content) {
 }
 
 /**
+ * Returns a human-readable-version of the language.
+ * 
+ * @param string $lang The specific language token
+ * 
+ * @return string The replaced language.
+ */
+function replaceLang(string $lang) {
+    $file = file_get_contents(__DIR__ . '/../languages/languages.json');
+    $languages = json_decode($file, true);
+
+    $return = '';
+
+    if(array_key_exists($lang, $languages)) {
+        $return = $languages[$lang];
+    } else {
+        $return = $lang;
+    }
+
+    return $return;
+}
+
+/**
  * Returns all of the blocks with code inside.
  * They are determined by having the 
  * `<code>{code}</code>`-structure.

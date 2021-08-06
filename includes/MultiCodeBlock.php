@@ -77,10 +77,13 @@ function &combineCodeDescription(string $code, Description &$desc, Parser &$pars
     $keysSize = sizeof($desc->keys);
 
     $return = '<table class="code-table">
-        <tr class="table-header">
-            <th>' . wfMessage('code_title') . '</th>
-            <th>' . wfMessage('code_description_title') . '</th>
-        </tr>
+        <thead>
+            <tr>
+                <th>' . wfMessage('code_title') . '</th>
+                <th>' . wfMessage('code_description_title') . '</th>
+            </tr>
+        </thead>
+        <tbody>
     ';
 
     $isFirst = ($arr[0] === '' ? true : false);
@@ -109,7 +112,7 @@ function &combineCodeDescription(string $code, Description &$desc, Parser &$pars
         $return .= '</pre></ol></th><th class="second">' . $parser->recursiveTagParseFully($desc->texts[$j]) . '</td>';
     }
 
-    $return .= '</table>';
+    $return .= '</tbody></table>';
 
     return $return;
 }

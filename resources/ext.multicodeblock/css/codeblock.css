@@ -91,11 +91,6 @@
     font-size: 15.2px;
 }
 
-.code-table > * {
-    margin: 0;
-    padding: 0;
-}
-
 .code-table p {
     margin: 0 !important;
 }
@@ -208,11 +203,11 @@
     transition: all .2s cubic-bezier(.3,0,.5,1);
 }
 
-.table-header {
+.multicodeblock thead {
     transform: translateY(-5px);
 }
 
-.table-header th {
+.multicodeblock thead th {
     border-bottom: #ccc 1px solid;
     margin: 0;
     padding-bottom: 3px;

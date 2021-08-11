@@ -4,7 +4,7 @@ In this folder there are different files that include different functions. These
 ### Files in the directory
 
 * ##### getData.php
-  > The `getData`-file combines utility functions that are returing data that the extension uses for the core logic.
+  > The `getData`-file combines utility functions that are returning data that the extension uses for the core logic.
 
 * ##### HTMLFramework.php
   > The `HTMLFramework`-file combines utility functions that are returning just HTML that is more a framework around the generated and more static than dynamic content.

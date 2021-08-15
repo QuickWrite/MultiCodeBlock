@@ -35,7 +35,7 @@ class MultiCodeBlockHooks {
 		require_once __DIR__ . '/../MultiCodeBlock.php';
 
 		$out = $parser->getOutput();
-    	$out->addModuleStyles(['ext.multicodeblock.styles']);
+    	$out->addModuleStyles(['ext.multicodeblock.styles', 'ext.multicodeblock.styles.mobile']);
     	$out->addModules(['ext.multicodeblock.js']);
 
 		return [ createMultiCodeBlock($input, $parser), 'noparse' => true, 'isHTML' => true, 'markerType' => 'nowiki' ];

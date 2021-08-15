@@ -32,6 +32,16 @@
 				"mobile"
 			]
 		},
+		"ext.multicodeblock.styles.mobile": {
+			"localBasePath": "resources/ext.multicodeblock/css/mobile",
+			"remoteExtPath": "MultiCodeBlock/resources/ext.multicodeblock/css/mobile",
+			"styles": [
+				"codeblock.css"
+			],
+			"targets": [
+				"mobile"
+			]
+		},
 		"ext.multicodeblock.js": {
 			"localBasePath": "resources/ext.multicodeblock/js",
 			"remoteExtPath": "MultiCodeBlock/resources/ext.multicodeblock/js",

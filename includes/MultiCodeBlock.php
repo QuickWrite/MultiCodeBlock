@@ -76,15 +76,20 @@ function &combineCodeDescription(string $code, Description &$desc, Parser &$pars
 
     $keysSize = sizeof($desc->keys);
 
+    /**
+     * This should be larger than 1 as the Description
+     * itself is always generating one element.
+     */ 
+    $descExists = sizeof($desc->keys) > 1;
+
     $return = '<table class="code-table">
         <thead>
             <tr>
-                <th>' . wfMessage('code_title') . '</th>
-                <th>' . wfMessage('code_description_title') . '</th>
+                <th>' . wfMessage('code_title') . '</th>'
+                . ($descExists ?'<th>' . wfMessage('code_description_title') . '</th>' : '' ) . '
             </tr>
         </thead>
-        <tbody>
-    ';
+    <tbody>';
 
     $isFirst = ($arr[0] === '' ? true : false);
 
@@ -109,7 +114,7 @@ function &combineCodeDescription(string $code, Description &$desc, Parser &$pars
             $i++;
         }
 
-        $return .= '</pre></ol></th><th class="second">' . $parser->recursiveTagParseFully($desc->texts[$j]) . '</td>';
+        $return .= '</pre></ol></th>' . ($descExists ? '<th class="second">' . $parser->recursiveTagParseFully($desc->texts[$j]) . '</th>' : '');
     }
 
     $return .= '</tbody></table>';

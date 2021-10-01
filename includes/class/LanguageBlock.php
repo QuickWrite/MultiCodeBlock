@@ -25,8 +25,16 @@ class LanguageBlock {
     private int $sizeDescription = 0;
 
     public function __construct(array &$codeblocks = null, &$descriptions = null, string &$lang = null) {
-        if($codeblocks === null || $descriptions === null || $lang === null)
-            return;
+        if($codeblocks === null)
+            $codeblocks = [""];
+        
+        if($descriptions === null)
+            $descriptions = [
+                getDOM("")
+            ];
+
+        if($lang === null)
+            $lang = "unknown";
 
         $this->setLanguageBlock($codeblocks, $descriptions, $lang);
     }

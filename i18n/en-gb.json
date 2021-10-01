@@ -10,5 +10,7 @@
 
     "codeblock_code_version": "Version #$1",
     "code_title": "Code",
-    "code_description_title": "Description"
+    "code_description_title": "Description",
+
+    "no_lang_attribute": "No \"lang\" attribute."
 }

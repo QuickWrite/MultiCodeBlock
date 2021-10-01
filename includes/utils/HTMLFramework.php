@@ -48,7 +48,7 @@ function createFrame(array &$lang, string &$code, bool $addCopy = true, string $
  */
 function createCodeBlock(array &$codeTags, DOMNodeList &$descriptions, $lang, Parser &$parser, \Highlight\Highlighter &$h1) {
     if($lang == null) {
-        return [ '<span style="color: red; font-size: 700;">No Lang Attribute</span>', 'No lang' ];
+        return [ '<span style="color: red; font-size: 700;">'.wfMessage('no_lang_attribute').'</span>', 'No lang' ];
     }
     
     $lang = strtolower($lang);

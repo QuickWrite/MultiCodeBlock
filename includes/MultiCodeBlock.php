@@ -32,12 +32,10 @@ function createMultiCodeBlock(string &$input, Parser &$parser) {
     $codevariants = $dom->getElementsbyTagName('codeblock');
 
     $descriptions = [];
-    foreach ($codevariants as $codevariant) {
-        array_push($descriptions, $codevariant->getElementsbyTagName('desc'));
-    }
     $codeArr = [];
     foreach ($codevariants as $codevariant) {
         array_push($codeArr, $codevariant->getElementsbyTagName('code'));
+        array_push($descriptions, $codevariant->getElementsbyTagName('desc'));
     }
 
     $size = sizeof($codevariants);
@@ -111,7 +109,7 @@ function &combineCodeDescription(string $code, Description &$desc, Parser &$pars
             if (!($i + 1 == $size && $arr[$i] === ''))
                 $return .= '<li><span class="line">' . ($arr[$i] !== '' ? $arr[$i] : '&nbsp;') . '</span></li>';
 
-            $i++;
+            ++$i;
         }
 
         $return .= '</pre></ol></th>' . ($descExists ? '<th class="second">' . $parser->recursiveTagParseFully($desc->texts[$j]) . '</th>' : '');
